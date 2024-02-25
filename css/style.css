@@ -1,0 +1,39 @@
+.main-container {
+    border: 3px solid black;
+    padding: 10px;
+}
+
+.top-panel {
+    border: 3px solid black;
+    margin-bottom: 1px;
+}
+
+.bottom-panel {
+    border: 3px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+.display-screen {
+    Background-color: rgb(186, 127, 240);
+    padding: 30px;
+}
+
+.row-1,
+.row-2,
+.row-3,
+.row-4,
+.row-5 {
+    display: flex;
+}
+
+button {
+    background-color: aqua;
+    border: solid;
+    padding: 20px;
+    display: flex;
+    flex: 1; 
+}
+
+
+

@@ -40,10 +40,39 @@ function operate(num1, operator, num2) {
     }
 }
 
+const displayScreen = document.querySelector('.display-screen');
+
+const allNumButtons = document.querySelectorAll('.num');
+allNumButtons.forEach(button => {
+    button.addEventListener('click', displayNumber);
+})
+
+const allOperatorButtons = document.querySelectorAll('.operator');
+
+function displayNumber(event) {
+    
+   let buttonValue = event.target.textContent;
+   let updateScreen = displayScreen.textContent;
+
+   displayScreen.textContent = updateScreen + buttonValue;
+} 
+
+function clearDisplay(event) {
+
+    displayScreen.textContent = '';
+}
+
+function storeOperand() {
+    let operand = [];
+    
+    //if ()
+ }
+
 
 let num1 = 2;
-let operator = 'o';
+let operator = '+';
 let num2 = 1.2;
 
 console.log(operate(num1, operator, num2))
+
 

@@ -1,4 +1,7 @@
 let precision = (total) => parseFloat(total.toPrecision(15));
+calculateArray = [];
+let currentNumber = '';
+let prevPress = '';
 
 function add(num1, num2) {
     let total = num1 + num2;
@@ -20,23 +23,38 @@ function divide(num1, num2) {
     return precision(total);
 }
 
-function operate(num1, operator, num2) {
+function operate(array, newOperator) {
+    let num1 = parseFloat(array[0])
+    let operator = array[1]
+    let num2 = parseFloat(array[2])
+
     let results;
     switch (operator) {
         case '+':
             results = add(num1, num2);
-            return results;
+            break
         case '-':
             results = subtract(num1, num2);
-            return results;
+            break
         case '*':
             results = multiply(num1, num2);
-            return results;
+            break
         case '/':
             results = divide(num1, num2);
-            return results;
+            break
         default:
-            return 'Invalid operator'
+            results = 'Invalid operator'
+            break
+    }
+    console.log('Results:', results)
+    if (results !== 'Invalid operator') {
+        displayScreen.textContent = results
+        if (newOperator !== '=')
+            calculateArray = [results, newOperator];
+        else {
+            calculateArray = [results]
+        }
+        prevPress = 'operator'
     }
 }
 
@@ -44,35 +62,65 @@ const displayScreen = document.querySelector('.display-screen');
 
 const allNumButtons = document.querySelectorAll('.num');
 allNumButtons.forEach(button => {
-    button.addEventListener('click', displayNumber);
+    button.addEventListener('click', (event) => {
+        if (prevPress === 'operator') {
+            clearDisplay();
+            prevPress = ''
+            if (calculateArray.length === 1)
+                calculateArray = [];
+        }
+            currentNumber += event.target.textContent;
+            displayNumber(event)
+    });
 })
 
 const allOperatorButtons = document.querySelectorAll('.operator');
+allOperatorButtons.forEach(button => {
+    button.addEventListener('click', (event) => {
+        addOperator(event)
+        prevPress = 'operator'
+    })
+})
+
+const equalButton = document.querySelector('.equal');
+equalButton.addEventListener('click', addOperator);
+
 
 function displayNumber(event) {
     
-   let buttonValue = event.target.textContent;
-   let updateScreen = displayScreen.textContent;
+    let buttonValue = event.target.textContent;
+    let updateScreen = displayScreen.textContent;
+ 
+    displayScreen.textContent = updateScreen + buttonValue;
+}  
 
-   displayScreen.textContent = updateScreen + buttonValue;
-} 
+function addOperator(event) {
+    let operator = event.target.textContent
+    console.log(operator)
 
-function clearDisplay(event) {
+    if (currentNumber !== '') {
+        if (calculateArray.length === 0 || calculateArray.length === 2) {
+            calculateArray.push(parseFloat(currentNumber));
+            currentNumber = '';
+        }
+    }
+    if (calculateArray.length === 1 && operator !== '=') {
+        calculateArray.push(operator);
+    } 
+
+    checkArray(calculateArray, operator);
+    
+    
+  }
+
+function checkArray(calculateArray, operator) {
+    console.log('Checkin:', calculateArray)
+    if (calculateArray.length === 3) {
+        operate(calculateArray, operator)
+    }
+}
+
+function clearDisplay() {
 
     displayScreen.textContent = '';
 }
-
-function storeOperand() {
-    let operand = [];
-    
-    //if ()
- }
-
-
-let num1 = 2;
-let operator = '+';
-let num2 = 1.2;
-
-console.log(operate(num1, operator, num2))
-
-

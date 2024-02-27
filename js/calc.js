@@ -104,9 +104,13 @@ function addOperator(event) {
             currentNumber = '';
         }
     }
-    if (calculateArray.length === 1 && operator !== '=') {
+    if ((calculateArray.length === 1 && operator !== '=')) {
         calculateArray.push(operator);
     } 
+    if ((calculateArray.length === 2 && operator !== '=' && prevPress === 'operator')) {
+        calculateArray[1] = operator;
+    } 
+    
 
     checkArray(calculateArray, operator);
     
@@ -124,3 +128,10 @@ function clearDisplay() {
 
     displayScreen.textContent = '';
 }
+
+const clearButton = document.querySelector('.clear');
+clearButton.addEventListener('click', (event) => {
+    clearDisplay(event);
+    calculateArray = [];
+})
+

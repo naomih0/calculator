@@ -87,11 +87,21 @@ equalButton.addEventListener('click', addOperator);
 
 
 function displayNumber(event) {
-    
     let buttonValue = event.target.textContent;
     let updateScreen = displayScreen.textContent;
+
+
+    if (currentNumber === '0' && buttonValue === '0') {
+
+        return;
+    }
  
-    displayScreen.textContent = updateScreen + buttonValue;
+    if (updateScreen === '0' || prevPress === 'operator') {
+        displayScreen.textContent = buttonValue;
+    } else {
+
+        displayScreen.textContent = updateScreen + buttonValue;
+    }
 }  
 
 function addOperator(event) {
@@ -126,7 +136,7 @@ function checkArray(calculateArray, operator) {
 
 function clearDisplay() {
 
-    displayScreen.textContent = '';
+    displayScreen.textContent = '0'
 }
 
 const clearButton = document.querySelector('.clear');
@@ -135,3 +145,5 @@ clearButton.addEventListener('click', (event) => {
     calculateArray = [];
 })
 
+const backButton = document.querySelector('.back');
+//backButton.addEventListener('click', )

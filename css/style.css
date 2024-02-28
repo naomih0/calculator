@@ -1,6 +1,11 @@
+body {
+    margin: 0px;
+}
+
 .main-container {
     border: 3px solid black;
-    padding: 10px;
+    padding: 5px;
+    width: 330px;
 }
 
 .top-panel {
@@ -15,8 +20,11 @@
 }
 
 .display-screen {
-    Background-color: rgb(186, 127, 240);
+    background-color: rgb(186, 127, 240);
     padding: 30px;
+
+    display: flex;
+    justify-content: flex-end;
 }
 
 .row-1,
@@ -28,12 +36,14 @@
 }
 
 button {
-    background-color: aqua;
-    border: solid;
-    padding: 20px;
     display: flex;
-    flex: 1; 
+    background-color: aqua;
+    border-radius: 5px;
+    flex: 1;
+    height: 50px;
+    width: 50px;
+    margin: 2px;
+
+    cursor: pointer;
+    border: none;
 }
-
-
-

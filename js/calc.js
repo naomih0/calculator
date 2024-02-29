@@ -1,5 +1,5 @@
 let precision = (total) => parseFloat(total.toPrecision(15));
-calculateArray = [];
+let calculateArray = [];
 let currentNumber = '';
 let prevPress = '';
 
@@ -63,7 +63,7 @@ const displayScreen = document.querySelector('.display-screen');
 const allNumButtons = document.querySelectorAll('.num');
 allNumButtons.forEach(button => {
     button.addEventListener('click', (event) => {
-        if (prevPress === 'operator') {
+        if (prevPress === 'operator' || prevPress === 'equal') {
             clearDisplay();
             prevPress = ''
             if (calculateArray.length === 1)
@@ -71,6 +71,7 @@ allNumButtons.forEach(button => {
         }
             currentNumber += event.target.textContent;
             displayNumber(event)
+            console.log("Num:", currentNumber)
     });
 })
 
@@ -83,7 +84,10 @@ allOperatorButtons.forEach(button => {
 })
 
 const equalButton = document.querySelector('.equal');
-equalButton.addEventListener('click', addOperator);
+equalButton.addEventListener('click',  (event) => {
+    addOperator(event);
+    prevPress = 'equal'
+});
 
 
 function displayNumber(event) {
@@ -106,7 +110,7 @@ function displayNumber(event) {
 
 function addOperator(event) {
     let operator = event.target.textContent
-    console.log(operator)
+    console.log("addOp", operator, currentNumber)
 
     if (currentNumber !== '') {
         if (calculateArray.length === 0 || calculateArray.length === 2) {
@@ -142,8 +146,20 @@ function clearDisplay() {
 const clearButton = document.querySelector('.clear');
 clearButton.addEventListener('click', (event) => {
     clearDisplay(event);
+    currentNumber = ''
     calculateArray = [];
+    console.log('Clear Button:', calculateArray)
+    console.log("Clear Num:", currentNumber)
 })
 
-const backButton = document.querySelector('.back');
-//backButton.addEventListener('click', )
+const backButton = document.querySelector('.backspace');
+backButton.addEventListener('click', backSpace);
+
+function backSpace() {
+    if (currentNumber.length > 0) {
+        currentNumber = currentNumber.slice(0, -1); // Remove the last character
+        displayScreen.textContent = currentNumber || '0'; // Update display, if currentNumber is empty, show '0'
+    }
+    console.log('BackSpace', currentNumber)
+}
+

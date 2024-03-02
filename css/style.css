@@ -1,5 +1,9 @@
 body {
-    background-color: rgba(233,229,217,255);
+    background-color: rgb(229, 174, 210);
+}
+
+* {
+    font-family: monospace;
 }
 
 .main-container {
@@ -35,6 +39,7 @@ body {
     font-size: 24px;
     box-shadow: inset 0px 0px 3px 2px #b46966;
     background-image: linear-gradient(#fbe2c7, #edaaa7);
+    flex-wrap: wrap;
 }
 
 .row-1,
@@ -58,7 +63,7 @@ button {
     align-items: center;
     padding: 0px;
     color: #574d4e;
-    font-size: 16px;
+    font-size: 18px;
     margin: 5px;
     box-shadow:  0px 2px 3px 1px #a15e58;
 }

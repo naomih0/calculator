@@ -75,19 +75,8 @@ const allNumButtons = document.querySelectorAll('.num'); // Buttons: 0-9
 allNumButtons.forEach(button => {
     button.addEventListener('click', (event) => {
 
-        if (prevPress === 'operator' || prevPress === 'equal') {
-            clearDisplay(); 
-            prevPress = ''; 
-
-            if (calculateArray.length === 1) {
-                calculateArray = []; // Clear the array if it has the previous result and user click on new number 
-            };
-        };
-            
-            currentNumber += event.target.textContent; // Concatenate the clicked number to the currentNumber 
-            displayNumber(event) // Display the current number
-
-            console.log("Num:", currentNumber)
+        newNumber(); // Checks if user input prompts a new number 
+        displayNumber(event.target.textContent); // Display the current number
     });
 });
 
@@ -95,7 +84,7 @@ const allOperatorButtons = document.querySelectorAll('.operator'); // Buttons: +
 allOperatorButtons.forEach(button => {
     button.addEventListener('click', (event) => {
 
-        addOperatorToArray(event); 
+        addOperatorToArray(event.target.textContent); 
         prevPress = 'operator';
     });
 });
@@ -103,37 +92,63 @@ allOperatorButtons.forEach(button => {
 const equalButton = document.querySelector('.equal'); 
 equalButton.addEventListener('click',  (event) => {
 
-    addOperatorToArray(event);
+    addOperatorToArray(event.target.textContent);
     prevPress = 'equal';
 });
 
-// FIX IT: Bug: Displaying multiple 0s when pressing 0 multiple times, then a number, then backspace; ex: 00005
-function displayNumber(event) {
-    let numberValue = event.target.textContent; // Value of pressed number button
+
+function displayNumber(numberValue) {
+    // let numberValue = event.target.textContent; // Value of pressed number button
     let updateScreen = displayScreen.textContent; // Current value that on the display screen 
  
-     // Prevents displaying multiple zeros; Replace initial '0' with starting number OR display second number after operator press
+    let hasDecimalPoint = updateScreen.includes('.'); 
+
+    // Prevents displaying multiple zeros; Replace initial '0' with starting number OR display second number after operator press
     if (updateScreen === '0' || prevPress === 'operator') {
-        displayScreen.textContent = numberValue;
+
+        if (numberValue === '.') { // Checks if user press '.' if screen has 0
+            displayScreen.textContent = '0' + numberValue; // If yes, it does '0.'
+        }
+
+        else if (prevPress === 'decimal') {
+            displayScreen.textContent = updateScreen + numberValue; // Concatenate a number after '0.'
+        }
+
+        else {
+            displayScreen.textContent = numberValue;
+        };
+    }
+
+    else if (numberValue === '.' && hasDecimalPoint) {
+        return; // Prevents more then 1 '.'
     }
 
     else {
-        displayScreen.textContent = updateScreen + numberValue;  // Concatenate the number on screen with the press number
+        displayScreen.textContent = updateScreen + numberValue;  // Concatenate the number on screen with the pressed number
     };
+
+    // Max number of 20 slots, if more cuts it out
+    if (displayScreen.textContent.length > 20) {
+
+        displayScreen.textContent = displayScreen.textContent.slice(0, 20);
+        return;
+    };
+
+    currentNumber = updateScreen === '0' ? numberValue : currentNumber + numberValue; // Concatenate the clicked number to the currentNumber 
+    console.log("Num:", currentNumber)
 };
 
 
-function addOperatorToArray(event) {
-    let operator = event.target.textContent; // Value of the pressed operator button
+function addOperatorToArray(operator) {
+    // let operator = event.target.textContent; // Value of the pressed operator button
 
-    console.log("addOp", operator, currentNumber)
+    console.log("addOpKEY", operator, currentNumber)
 
     // Adds the number pressed to array when operator or equal button is pressed
     if (currentNumber !== '') {
 
-        if (calculateArray.length === 0 || calculateArray.length === 2) { // numbers can only be first or third element in array
+        if (calculateArray.length === 0 || calculateArray.length === 2) { // Numbers can only be first or third element in array
             calculateArray.push(parseFloat(currentNumber));
-            currentNumber = ''; 
         };
     };
 
@@ -147,11 +162,14 @@ function addOperatorToArray(event) {
         calculateArray[1] = operator; // Updates operator
     };
 
+    currentNumber = ''; 
     checkArray(calculateArray, operator); 
 };
 
 function checkArray(calculateArray, operator) {
     console.log('Checkin:', calculateArray)
+    console.log(operator)
+
 
     if (calculateArray.length === 3) {
         operate(calculateArray, operator) // Calcuates when array reaches 3 element
@@ -163,14 +181,11 @@ function clearDisplay() {
 }
 
 const clearButton = document.querySelector('.clear');
-clearButton.addEventListener('click', (event) => {
+clearButton.addEventListener('click', () => {
 
-    clearDisplay(event);
+    clearDisplay();
     currentNumber = '';
     calculateArray = [];
-
-    console.log('Clear Button:', calculateArray)
-    console.log("Clear Num:", currentNumber)
 });
 
 const backButton = document.querySelector('.backspace');
@@ -185,4 +200,146 @@ function backSpace() {
 
     console.log('BackSpace', currentNumber)
 };
+
+const decimalButton = document.querySelector('.decimal');
+decimalButton.addEventListener('click', (event) => {
+
+    newNumber();
+    displayNumber(event.target.textContent);
+    prevPress = 'decimal';
+});
+
+const percentageButton = document.querySelector('.percentage');
+percentageButton.addEventListener('click', numberToPercent)
+
+function numberToPercent() {
+    let updateScreen = displayScreen.textContent; // Current value that on the display screen 
+ 
+    let convertNumber = (updateScreen / 100)
+
+    currentNumber = convertNumber;
+    displayScreen.textContent = currentNumber;
+    
+    // Updates the array with new number
+    if (calculateArray.length === 1) {
+        calculateArray[0] = currentNumber;
+    } 
+
+    else if (calculateArray.length === 2) {
+        calculateArray[2] = currentNumber;
+    };
+
+    console.log('Percent:', currentNumber)
+};
+
+const negativeButton = document.querySelector('.negative');
+negativeButton.addEventListener('click', negativeConvert);
+
+function negativeConvert() {
+    let updateScreen = displayScreen.textContent; // Current value that on the display screen 
+
+    let convertNegative = '';
+
+    if (updateScreen.includes('-')) {
+
+        convertNegative = updateScreen.replace('-', '');
+        currentNumber = convertNegative;
+        displayScreen.textContent = currentNumber;
+    }
+
+    else {
+
+        convertNegative = '-' + updateScreen;
+        currentNumber = convertNegative;
+        displayScreen.textContent = currentNumber;
+    };
+
+    console.log('Neg Con', currentNumber)
+};
+
+function newNumber() {
+
+    if (prevPress === 'operator' || prevPress === 'equal') {
+        clearDisplay(); 
+        prevPress = ''; 
+
+        if (calculateArray.length === 1) {
+            calculateArray = []; // Clear the array if it has the previous result and user click on new number 
+        };
+    };
+};
+
+
+// Keyboard Function
+
+// All Clear
+document.addEventListener('keydown', function(event) {
+
+    if (event.key === 'c') {
+        clearDisplay();
+        currentNumber = '';
+        calculateArray = [];
+    };
+});
+
+// Negative Button
+document.addEventListener('keydown', function(event) {
+
+    if (event.key === 'n') {
+        negativeConvert();
+    };
+});
+
+// Percent Button
+document.addEventListener('keydown', function(event) {
+
+    if (event.key === '%') {
+        numberToPercent();
+    };
+});
+
+// Back Button
+document.addEventListener('keydown', function(event) {
+
+    if (event.key === 'Backspace') {
+        backSpace();
+    };
+});
+
+// Decimal Button
+document.addEventListener('keydown', function(event) {
+
+    if (event.key === '.') {
+        newNumber();
+        displayNumber(event.key);
+        prevPress = 'decimal';
+    };
+});
+
+// Equal Button
+document.addEventListener('keydown', function(event) {
+
+    if (event.key === '=') {
+        addOperatorToArray(event.key);
+        prevPress = 'equal';
+    };
+});
+
+// Operator Buttons 
+document.addEventListener('keydown', function(event) {
+
+    if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/') {
+        addOperatorToArray(event.key); 
+        prevPress = 'operator';
+    };
+});
+
+// Number Buttons 
+document.addEventListener('keydown', function(event) {
+
+    if (event.key >= '0' && event.key <= '9') {
+        newNumber();
+        displayNumber(event.key); 
+    };
+});
 

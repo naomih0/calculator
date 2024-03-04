@@ -22,8 +22,13 @@ function multiply(num1, num2) {
 };
 
 function divide(num1, num2) {
-    let total = num1 / num2;
-    return precision(total);
+    if (num1 === 0 && num2 === 0) {
+        return 'Don\'t divide by zero!';
+    }
+    else {
+        let total = num1 / num2;
+        return precision(total);
+    };
 };
 
 // finalArray is calculateArray with three elements; newOperator is the operator that trigger this function
@@ -105,6 +110,7 @@ function displayNumber(numberValue) {
 
     // Prevents displaying multiple zeros; Replace initial '0' with starting number OR display second number after operator press
     if (updateScreen === '0' || prevPress === 'operator') {
+       displayScreen.textContent = numberValue;
 
         if (numberValue === '.') { // Checks if user press '.' if screen has 0
             displayScreen.textContent = '0' + numberValue; // If yes, it does '0.'
@@ -118,7 +124,7 @@ function displayNumber(numberValue) {
             displayScreen.textContent = numberValue;
         };
     }
-
+     
     else if (numberValue === '.' && hasDecimalPoint) {
         return; // Prevents more then 1 '.'
     }
@@ -146,6 +152,10 @@ function addOperatorToArray(operator) {
 
     // Adds the number pressed to array when operator or equal button is pressed
     if (currentNumber !== '') {
+
+        if (currentNumber === '.') { // Makes 0. into 0 in array
+            currentNumber = '0';
+        }
 
         if (calculateArray.length === 0 || calculateArray.length === 2) { // Numbers can only be first or third element in array
             calculateArray.push(parseFloat(currentNumber));

@@ -124,7 +124,7 @@ function displayNumber(numberValue) {
             displayScreen.textContent = numberValue;
         };
     }
-     
+
     else if (numberValue === '.' && hasDecimalPoint) {
         return; // Prevents more then 1 '.'
     }
@@ -329,8 +329,9 @@ document.addEventListener('keydown', function(event) {
 // Equal Button
 document.addEventListener('keydown', function(event) {
 
-    if (event.key === '=') {
-        addOperatorToArray(event.key);
+    if (event.key === '=' || event.key === 'Enter') {
+        event.preventDefault(); 
+        addOperatorToArray('=');
         prevPress = 'equal';
     };
 });

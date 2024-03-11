@@ -6,48 +6,57 @@
     <title>Calculator</title>
     <script src="./js/calc.js" defer></script>
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
 <body>
-    <div class="main-container">
-
-        <div class="top-panel">
-        <div class="display-screen">0</div>
+    <h2>Calculator</h2>
+    <main>
+        <div class="main-container">
+            <div class="top-panel">
+            <div class="display-screen">0</div>
+            </div>
+            <div class="bottom-panel">
+                <div class="row-1">
+                    <button type=“button” class="clear">AC</button>
+                    <button type=“button” class="negative">+/-</button>
+                    <button type=“button” class="percentage">%</button>
+                    <button type=“button” class="operator divide">/</button>
+                </div>
+                <div class="row-2">
+                    <button type=“button” class="num seven">7</button>
+                    <button type=“button” class="num eight">8</button>
+                    <button type=“button” class="num nine">9</button>
+                    <button type=“button” class="operator multiply">*</button>
+                </div>
+                <div class="row-3">
+                    <button type=“button” class="num four">4</button>
+                    <button type=“button” class="num five">5</button>
+                    <button type=“button” class="num six">6</button>
+                    <button type=“button” class="operator subtract">-</button>
+                </div>
+                <div class="row-4">
+                    <button type=“button” class="num one">1</button>
+                    <button type=“button” class="num two">2</button>
+                    <button type=“button” class="num three">3</button>
+                    <button type=“button” class="operator plus">+</button>
+                </div>
+                <div class="row-5">
+                    <button type=“button” class="backspace">BACK</button>
+                    <button type=“button” class="num zero">0</button>
+                    <button type=“button” class="decimal">.</button>
+                    <button type=“button” class="equal">=</button>
+                </div>
+            </div>
+            </div>
         </div>
+    </main>
 
-        <div class="bottom-panel">
-            <div class="row-1">
-                <button type=“button” class="clear">AC</button>
-                <button type=“button” class="negative">+/-</button>
-                <button type=“button” class="percentage">%</button>
-                <button type=“button” class="operator divide">/</button>
-            </div>
-            <div class="row-2">
-                <button type=“button” class="num seven">7</button>
-                <button type=“button” class="num eight">8</button>
-                <button type=“button” class="num nine">9</button>
-                <button type=“button” class="operator multiply">*</button>
-            </div>
-            <div class="row-3">
-                <button type=“button” class="num four">4</button>
-                <button type=“button” class="num five">5</button>
-                <button type=“button” class="num six">6</button>
-                <button type=“button” class="operator subtract">-</button>
-            </div>
-            <div class="row-4">
-                <button type=“button” class="num one">1</button>
-                <button type=“button” class="num two">2</button>
-                <button type=“button” class="num three">3</button>
-                <button type=“button” class="operator plus">+</button>
-            </div>
-            <div class="row-5">
-                <button type=“button” class="backspace">BACK</button>
-                <button type=“button” class="num zero">0</button>
-                <button type=“button” class="decimal">.</button>
-                <button type=“button” class="equal">=</button> 
-            </div>
-        </div>
-
-        </div>
-    </div>
+    <footer>
+        <p>Copyright © 2024 Naomi Ho</p>
+        <a href="https://github.com/naomih0" target="_blank">
+            <i class="fab fa-github fa-lg" style="color: #000000;"></i>
+          </a>
+          
+    </footer>
 </body>
 </html>

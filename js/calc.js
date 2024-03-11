@@ -134,9 +134,9 @@ function displayNumber(numberValue) {
     };
 
     // Max number of 20 slots, if more cuts it out
-    if (displayScreen.textContent.length > 20) {
+    if (displayScreen.textContent.length > 19) {
 
-        displayScreen.textContent = displayScreen.textContent.slice(0, 20);
+        displayScreen.textContent = displayScreen.textContent.slice(0, 19);
         return;
     };
 

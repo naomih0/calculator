@@ -279,11 +279,6 @@ function newNumber() {
     };
 };
 
-// Mobile Support
-document.addEventListener('touchstart', function(event) {
-    event.preventDefault();
-}, { passive: false });
-
 // Keyboard Function
 
 // All Clear

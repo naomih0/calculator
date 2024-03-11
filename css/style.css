@@ -83,6 +83,7 @@ button {
     font-size: 18px;
     margin: 5px;
     box-shadow:  0px 2px 3px 1px #a15e58;
+    touch-action: manipulation;
 }
 
 .row-1 button:first-child,
